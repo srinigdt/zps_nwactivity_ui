@@ -1,0 +1,155 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout"
+	xmlns:cl="sap.ui.commons.layout" xmlns:c="sap.ui.commons" xmlns:t="sap.ui.table"
+	xmlns:tt="sap.ui.table.TreeTable" xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:cc="gdt.ui.ps.networkcomp.controls"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Panel id='detailQuotePageHeader' class="sapUiSizeCompact"
+		expandable="false" expanded="true" visible="true">
+		<Toolbar>
+			<ToolbarSpacer />
+			<Button type="Reject" icon="sap-icon://sys-cancel" text="{i18n>CancelButtonText}"
+				press="onEditCancelButtonPress" visible="{currentState>/isEditMode}" />
+			<Button icon="sap-icon://delete" type="Emphasized"
+				text="{i18n>DeleteButtonText}" press="onDeleteLineItems"
+				visible="{=(${currentState>/isEditMode} &amp;&amp; ${currentState>/deleteEnable} )}" />
+			<Button icon="sap-icon://edit" type="Emphasized" text="{i18n>EditButtonText}"
+				visible="{currentState>/canEdit}" press="onEditCancelButtonPress" />
+			<Button type="Accept" icon="sap-icon://create-session" text="{i18n>SaveButtonText}"
+				press="onSaveNwActivityItems"
+				visible="{=(${currentState>/isEditMode} &amp;&amp; !(${currentState>/deleteEnable}) )}" />
+		</Toolbar>
+
+		<content>
+
+			<l:Grid class="gridMarginTop" vSpacing="1rem" hSpacing="0rem"
+				defaultSpan="L6 M6 S12">
+				<l:content>
+
+					<Input editable="false" value="Project #" class='ColumnLabel'>
+						<layoutData>
+							<l:GridData span="L2 M2 S2" />
+						</layoutData>
+					</Input>
+
+					<Input placeholder="" value="{currentData>/Project}"
+						editable="false">
+						<layoutData>
+							<l:GridData span="L1 M1 S1" />
+						</layoutData>
+					</Input>
+
+					<Input placeholder="" class="Description" value="{currentData>/ProjectText} "
+						editable="false">
+						<layoutData>
+							<l:GridData span="L9 M9 S9" />
+						</layoutData>
+					</Input>
+
+					<Input editable="false" value="Network #" class='ColumnLabel'>
+						<layoutData>
+							<l:GridData span="L2 M2 S2" />
+						</layoutData>
+					</Input>
+
+					<Input placeholder="" value="{currentData>/Network}"
+						editable="false">
+						<layoutData>
+							<l:GridData span="L1 M1 S1" />
+						</layoutData>
+					</Input>
+
+					<Input placeholder="" class="Description" value="{currentData>/NetworkText}  "
+						editable="false">
+						<layoutData>
+							<l:GridData span="L9 M9 S9" />
+						</layoutData>
+					</Input>
+
+
+					<Input editable="false" value="Activity #" class='ColumnLabel'>
+						<layoutData>
+							<l:GridData span="L2 M2 S2" />
+						</layoutData>
+					</Input>
+					<Input placeholder="" value="{currentData>/Activity}"
+						editable="false">
+						<layoutData>
+							<l:GridData span="L1 M1 S1" />
+						</layoutData>
+					</Input>
+
+					<Input placeholder="" class="Description" value="{currentData>/ActivityText} "
+						editable="false">
+						<layoutData>
+							<l:GridData span="L9 M9 S9" />
+						</layoutData>
+					</Input>
+
+					<Input editable="false" value="Delivery Date" class='ColumnLabel'>
+						<layoutData>
+							<l:GridData span="L2 M2 S2" />
+						</layoutData>
+					</Input>
+					<!-- <DateTimeInput id="ReqDate" type="Date" width="80px" change="onChangeDeliveryDate" 
+						dateValue="{currentData>/ReqDate}" displayFormat="MM/dd/yy" editable="{currentState>/isEditMode}"> 
+						<layoutData> <l:GridData span="L10 M10 S10" /> </layoutData> </DateTimeInput> -->
+					<DatePicker id="ReqDate" type="Date" width="100px"
+						change="onChangeDeliveryDate" dateValue="{currentData>/ReqDate}"
+						displayFormat="MM/dd/yy" editable="{currentState>/isEditMode}">
+						<layoutData>
+							<l:GridData span="L10 M10 S10" />
+						</layoutData>
+					</DatePicker>
+				</l:content>
+			</l:Grid>
+
+			<l:Grid class="gridMarginTop" vSpacing="1rem" hSpacing="0rem"
+				defaultSpan="L6 M6 S12">
+				<l:content>
+					<Input id="CustomerID" editable="false" value="Customer Ship-to #"
+						class='ColumnLabel'>
+						<layoutData>
+							<l:GridData span="L2 M2 S2" />
+						</layoutData>
+					</Input>
+					<Input id="CustomerValueID" width="100px" tooltip="Customer ID"
+						valueStateText="Enter Valid Customer Number"
+						showValueStateMessage="false"
+						value="{path: 'currentData>/Customer', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 10} }"
+						placeholder="Customer Number" showValueHelp="true"
+						valueHelpRequest="handleCustomerSearchHelp" change="onChangeCustomer"
+						submit="onChangeCustomer" editable="{currentState>/isEditMode}">
+						<layoutData>
+							<l:GridData span="L1 M1 S1" />
+						</layoutData>
+					</Input>
+                   <Toolbar>
+					<Button id="showQuickView" tooltip="Display customer" icon="sap-icon://customer" type="Emphasized"
+						press="handleQuickView" enabled="{= (!${currentState>/anyErrors}) }">
+					</Button>
+					<Button id="createCust" tooltip="Edit Ship-to Info" icon="sap-icon://edit" type="Emphasized"
+						press="handleEditCustomerShipTo" enabled="{currentState>/isEditMode}"
+						visible="{currentState>/isEditMode}">
+					</Button>
+					<Button id="ChangeCust" tooltip="Create Hotel or Home Ship-to address" icon="sap-icon://create" type="Emphasized"
+						press="handleCreateCustomerShipTo" enabled="{currentState>/isEditMode}" fieldGroupIds='{currentData>/OtherText}'
+						visible="{currentState>/isEditMode}">
+
+					</Button>
+						<layoutData>
+							<l:GridData span="L9 M9 S9" />
+						</layoutData>
+                   </Toolbar>
+					<!-- <cc:HoverButton id="showQuickView" text="Quick View" icon="sap-icon://customer" 
+						type="Emphasized" width="20px" press="handleQuickView" mouseover="handleQuickView" 
+						enabled="{= (!${currentState>/anyErrors}) }"> </cc:HoverButton> -->
+
+				</l:content>
+			</l:Grid>
+
+		</content>
+
+	</Panel>
+
+
+</core:FragmentDefinition>

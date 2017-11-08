@@ -1,0 +1,50 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core">
+
+	<TableSelectDialog id='CustomersNumberSearchID'
+		contentWidth="900px" noDataText="Loading...." title="Customers Number Search"
+		search="handleCustomerSearchHelpSearch" change="handleCustomerSearchHelpSearch"
+		class="partHelp" items="{Customers>/}">
+		<columns>
+			<Column hAlign="Center" width="100px">
+				<Text text="Customer" class='ColumnLabel' />
+			</Column>
+			<Column hAlign="Center" width="200px">
+				<Text text="Name" class='ColumnLabel' />
+			</Column>
+			<Column hAlign="Center" width="60px">
+				<Text text="Country" class='ColumnLabel' />
+			</Column>
+			<Column hAlign="Center" width="60px">
+				<Text text="Region" class='ColumnLabel' />
+			</Column>
+			<Column hAlign="Center" width="60px">
+				<Text text="Postal Code" class='ColumnLabel' />
+			</Column>
+			<Column hAlign="Center" width="140px">
+				<Text text="Street" class='ColumnLabel' />
+			</Column>
+			<Column hAlign="Center" width="140px">
+				<Text text="City" />
+			</Column>
+			<Column hAlign="Center" width="60px">
+				<Text text="Search Team" class='ColumnLabel' />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier text="{Customers>Customer}" />
+					<Text text="{Customers>Name}" />
+					<Text text="{Customers>Country}" />
+					<Text text="{Customers>Region}" />
+					<Text text="{Customers>PoCode}" />
+					<Text text="{Customers>Street}" />
+					<Text text="{Customers>City}" />
+					<Text text="{Customers>Search}" />
+				</cells>
+			</ColumnListItem>
+		</items>
+
+	</TableSelectDialog>
+</core:FragmentDefinition>

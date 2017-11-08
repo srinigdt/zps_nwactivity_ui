@@ -1,0 +1,82 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout"
+	xmlns:cl="sap.ui.commons.layout" xmlns:c="sap.ui.commons" xmlns:t="sap.ui.table"
+	xmlns:tt="sap.ui.table.TreeTable" xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core" xmlns="sap.m"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+	<Panel id='detailQuotePageHeader' class="sapUiSizeCompact"
+		backgroundDesign="Solid" expandable="false" expanded="true" visible="true">
+		<!-- <Toolbar> <ToolbarSpacer /> </Toolbar> -->
+		<content>
+			<FlexBox alignItems="Center" justifyContent="Center">
+		     <Text id="info"  visible="false" text="Welcome to Demo Session"/> 
+		    </FlexBox>  
+			<core:HTML content='&lt;p&gt; &lt;p&gt;' />
+			<FlexBox alignItems="Center" justifyContent="Center">
+				<Text id="info1" visible="false"
+					text="Please enter Project's Network Number,Activity Number and Submit" />
+			</FlexBox>
+			<core:HTML content='&lt;p class=&quot;TopMargin&quot;&gt; &lt;p&gt;'>
+			</core:HTML>
+			<FlexBox alignItems="Center" justifyContent="Center">
+				<l:Grid class="gridMarginTop" vSpacing="1rem" hSpacing="0rem"
+					defaultSpan="L12 M12 S12">
+					<l:content>
+						<Input editable="false" value="Network #" textAlign="Right">
+							<layoutData>
+								<l:GridData span="L5 M6 s6" />
+							</layoutData>
+						</Input>
+
+<!-- 						<Input placeholder="" width="120px" maxLength='10'
+							change="onChangeNetwork" value="{inputData>/Network}" editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L7 M6 s6" />
+							</layoutData>
+						</Input> -->
+						<Input 
+						    width="120px"
+							tooltip="SAP Material ID: {path: 'lineItems>Material'}" id="MFRPNID"
+							valueStateText="Requested Network # must not be empty. Maximum 10 characters."
+							showValueStateMessage="false"
+							value="{path: 'inputData>/Network', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 10} }"
+							placeholder="SAP Proj's Network # requested..." showValueHelp="true"
+							valueHelpRequest="onNetworkIDHelp" change="onChangeNetworkID"
+							submit="onFetchData"
+							editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L7 M6 s6" />
+							</layoutData>
+						</Input>
+
+
+
+
+						<Input editable="false" value="Activity #" textAlign="Right">
+							<layoutData>
+								<l:GridData span="L5 M6 s6" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" width="80px" maxLength='4'
+							submit="onFetchData" change="onChangeActivity" value="{inputData>/Activity}" editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L7 M6 s6" />
+							</layoutData>
+						</Input>
+
+					</l:content>
+				</l:Grid>
+			</FlexBox>
+			<FlexBox alignItems="Start" justifyContent="Center">
+				<items>
+					<Button text="Submit" press="onFetchData" />
+				</items>
+			</FlexBox>
+			<core:HTML content='&lt;p class=&quot;TopMargin&quot;&gt; &lt;p&gt;'>
+			</core:HTML>
+		</content>
+
+	</Panel>
+	<!-- <FlexBox alignItems="Start" justifyContent="Center"> <items> <Button 
+		text="{i18n>DisplayNotFound}" press="onDisplayNotFound" /> </items> </FlexBox> -->
+</core:FragmentDefinition>

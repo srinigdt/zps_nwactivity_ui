@@ -1,0 +1,243 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:cl="sap.ui.commons.layout"
+	xmlns:c="sap.ui.commons" xmlns:t="sap.ui.table" xmlns:tt="sap.ui.table.TreeTable"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:clp="gdt.ui.ps.networkcomp/lib/clipboard-min">
+	<Dialog
+		title="Customer Ship-to Hotel/Home Address Create"
+		id="dialogCustomerShipTo" draggable="true" contentWidth="500px"
+		class="sapUiSizeCompact">
+       <Panel id='PanelCustomerShipTo' class="sapUiSizeCompact"
+			expandable="false" expanded="true" visible="{=(!${currentState>/isCustCreate})}">
+			<content>
+				<l:Grid class="gridMarginTop" vSpacing="1rem" hSpacing="0rem"
+					defaultSpan="L6 M6 S12">
+					<l:content>
+						<Input editable="false" value="Customer">
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input width="90px" tooltip="Customer ID" id="customerShipToEditID"
+							valueStateText="Enter Valid Customer Number"
+							showValueStateMessage="false"
+							value="{path: 'customerShipToAddress>/Customer', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 10} }"
+							placeholder="Customer Number" showValueHelp="true"
+							valueHelpRequest="handleCustomerSearchHelp" change="handleChangeCustomerID"
+							submit="handleChangeCustomerID" editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+					</l:content>
+				</l:Grid>
+			</content>
+
+		</Panel> 
+		
+		<Panel id='PanelcustomerShipToAddress' class="sapUiSizeCompact"
+			  expandable="false" expanded="true" visible="true">
+			<content>
+				<l:Grid class="gridMarginTop" vSpacing="1rem" hSpacing="0rem"
+					defaultSpan="L6 M6 S12">
+					<l:content>
+
+
+<!-- 1st Row -->
+
+						<Input editable="false" value="Search Term" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" value="{customerShipToAddress>/Sort1}"  maxLength='10' width='95px'
+							editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5" />
+							</layoutData>
+						</Input>
+						<Input  placeholder=""  value="" editable="false">
+							<layoutData>
+								<l:GridData span="L4 M4 S4" />
+							</layoutData>
+						</Input> 
+
+<!-- 1st Row -->
+						<Input editable="false" value="Name" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" value="{customerShipToAddress>/Name1}"  change="handleOnChangeCustomerShipToName1"
+							editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5" />
+							</layoutData>
+						</Input>
+						<Input id="NameWaringID"  placeholder="" class="Warning" value="" editable="false">
+							<layoutData>
+								<l:GridData span="L4 M4 S4" />
+							</layoutData>
+						</Input>
+	
+
+
+<!-- 2nd Row -->
+
+						<Input editable="false" value="Name 2" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" value="{customerShipToAddress>/Name2}"
+							editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" class="Description" value="{}"
+							editable="false">
+							<layoutData>
+								<l:GridData span="L4 M4 S4" />
+							</layoutData>
+						</Input>
+
+
+
+<!-- 3rd Row -->
+						<Input editable="false" value="Street" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" width='220px'
+							value="{customerShipToAddress>/Street}"
+							editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+<!-- 4th Row -->
+						<Input editable="false" value="Street 4" class='ColumnLabel' visible="{=(!${currentState>/isCustCreate})}">
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" width='220px' visible="{=(!${currentState>/isCustCreate})}"
+							value="{customerShipToAddress>/StrSuppl3}"
+							editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+
+<!-- 5th Row -->
+						<Input editable="false" value="Postal Code" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" width='90px'
+							value="{customerShipToAddress>/PostCode1}"
+							editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+
+
+<!-- 6th Row -->
+						<Input editable="false" value="City" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" width='220px'
+							value="{customerShipToAddress>/City1}"
+							editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+
+<!-- 7th Row -->
+						<Input editable="false" value="Country" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+
+						<Input value="{customerShipToAddress>/Country}" type="Text"
+							showSuggestion="true" filterSuggests="false" startSuggestion="0"
+							suggest="handleSuggestCountry" maxSuggestionWidth="200px"
+							placeholder=""
+							editable="{currentState>/isEditMode}"
+							change="handleChangeCountryforCustomerShipTo">
+							<layoutData>
+								<l:GridData span="L1 M1 S1" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" class="Description"
+							value="{path:'customerShipToAddress>/Country',formatter: '.formatter.countryName'}"
+							editable="false">
+							<layoutData>
+								<l:GridData span="L2 M2 S2" />
+							</layoutData>
+						</Input>
+						<Input id="CustomerShipToCountryID" placeholder="" class="Error"
+							value=""
+							editable="false">
+							<layoutData>
+								<l:GridData span="L6 M6 S6" />
+							</layoutData>
+						</Input>
+<!-- 8th Row -->
+						<Input editable="false" value="Region" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input value="{customerShipToAddress>/Region}" type="Text"
+							showSuggestion="true" filterSuggests="false" startSuggestion="0"
+							suggest="handleSuggestRegion" maxSuggestionWidth="200px"
+							placeholder=""
+							editable="{currentState>/isEditMode}"
+							change="handleChangeRegion">
+							<layoutData>
+								<l:GridData span="L1 M1 S1" />
+							</layoutData>
+						</Input>
+
+						<Input placeholder="" class="Description"
+							value="{path:'customerShipToAddress>/Region',formatter: '.formatter.regionName'}"
+							editable="false">
+							<layoutData>
+								<l:GridData span="L8 M8 S8" />
+							</layoutData>
+						</Input>
+					</l:content>
+				</l:Grid>
+
+			</content>
+
+		</Panel> 
+
+		<Toolbar design="Auto">
+			<ToolbarSpacer />
+			   <Button  text="Save"   tooltip="Save Customer Address Details" visible="{=(!${currentState>/isCustCreate})}"
+				        type="Accept" press="handleSaveCustomerShipTo"  icon="sap-icon://save" />
+				        
+			   <Button  text="Create" tooltip="Create New Customer"      visible="{currentState>/isCustCreate}"
+				        type="Accept" press="handleCustomerShipToCreate" icon="sap-icon://create" />	
+				        	        
+		   	   <Button  text="Cancel" tooltip="Cancel to Exit"      visible="{currentState>/isEditMode}"
+				        type="Reject" press="handleCancelCustomerShipToCreate" icon="sap-icon://sys-cancel" />	
+				        
+        	
+		</Toolbar>
+	</Dialog>
+</core:FragmentDefinition>

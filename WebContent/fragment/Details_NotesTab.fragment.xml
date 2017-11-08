@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form"
+	xmlns:commons="sap.ui.commons" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:t="sap.ui.table" xmlns:ui="sap.ca.ui" xmlns:chart="sap.ca.ui.charts">
+
+	<Panel class="sapUiSizeCompact">
+		<Toolbar height="2rem">
+			<ToolbarSpacer />
+			 <Button type="Reject" icon="sap-icon://sys-cancel" text="{i18n>CancelButtonText}"
+					press="onEditCancelButtonPress" visible="{currentState>/isEditMode}" />
+			    <Button icon="sap-icon://delete" type="Emphasized"  text="{i18n>DeleteButtonText}"
+					press="onDeleteLineItems" visible="{=(${currentState>/isEditMode} &amp;&amp; ${currentState>/deleteEnable} )}"  /> 	
+				<Button icon="sap-icon://edit" type="Emphasized" text="{i18n>EditButtonText}"
+					visible="{currentState>/canEdit}" press="onEditCancelButtonPress" />
+				<Button type="Accept" icon="sap-icon://create-session" text="{i18n>SaveButtonText}"
+					press="onSaveNwActivityItems" visible="{=(${currentState>/isEditMode} &amp;&amp; !(${currentState>/deleteEnable}) )}" /> 	
+		</Toolbar>	
+<!-- 		</headerToolbar> -->
+		<l:VerticalLayout width='100%'>
+			<Label text="Delivery Notes" design="Bold" />
+			<TextArea width='100%' value="{path: 'currentData>/DeliveryText'}"
+				placeholder="{i18n>DeliveryNotes}" rows="15" editable="{currentState>/isEditMode}" />
+			<core:HTML content='&lt;BR&gt;' />
+		</l:VerticalLayout>
+	</Panel>
+</core:FragmentDefinition>

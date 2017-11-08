@@ -1,0 +1,15 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" controllerName="gdt.ui.ps.networkcomp.controllers.Selection"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="Project Builder : Add Components to Network-Activity">
+		<content>
+			<core:Fragment fragmentName="gdt.ui.ps.networkcomp.fragment.Selection_Inputfields"
+				type="XML" />
+		</content>
+		<footer>
+			<Bar>
+
+			</Bar>
+		</footer>
+	</Page>
+</mvc:View>

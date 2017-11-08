@@ -1,0 +1,374 @@
+
+::-webkit-scrollbar {
+		 width: 1em !important;
+		 height: 1em !important;
+	}
+
+/*	
+::-webkit-scrollbar-thumb {
+          background-color: darkgrey !important;
+	}
+"*/
+.sapUiFup {
+	display: none !important;
+}
+
+.sapMBusyDialog .sapMDialogTitle {
+	background-color: white;
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+.sapUiRespGrid.sapUiRespGridHSpace1  {
+	padding: 0 !important;
+}
+
+.sapUiTable>.sapUiTableFtr {
+	padding: 0 !important;
+}
+
+.sapUiRespGrid.sapUiRespGridVSpace1>div {
+	margin: 0 !important;
+}
+	
+.sapUiTableColCell, .sapUiTableCell {
+	padding: 0 0.1rem 0 0.1rem !important;
+}
+
+.sapUiTableCell .sapMInputBaseInner {
+	padding: 0 0.2rem 0 0.2rem !important;
+}
+
+.sapMPanelContent {
+	padding: .3rem;
+}	
+
+.sapUiTheme-z_gdt_theme {
+	font-size: 14px;
+}
+
+.negativeGP input, tr:nth-child(even).negativeGP input {
+	color: red !important;
+}
+
+.rejected, tr:nth-child(even).rejected, .sapUiTable tr.rejected.sapUiTableRowHvr>td  {
+	background-color: yellow !important;
+}
+
+.markedAsDeleted input, tr:nth-child(even).markedAsDeleted input {
+	color: gray !important;
+	text-decoration: line-through;
+}
+
+
+/* The animation code */
+@keyframes deleteline{
+    from {color: red;}
+    to {color: gray !important;}
+}
+
+
+.demo{
+    height: 20px;
+    position: relative;
+	color: orange;
+	font-size:15px;
+	font-family:"Arial Black", Gadget, sans-serif;
+    animation-name: demo;
+    animation-duration: 30s;
+    animation-timing-function:linear;	
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* The animation code */
+@keyframes demo{
+    0%   {color:#00FFFF;left:0px; top:10px;}
+    20%  {color:#8A2BE2;left:200px; top:10px;}
+    40%  {color:#FF8C00;left:400px; top:10px;}
+    60%  {color:#008000;left:600px; top:10px;}
+    80%  {color:#7CFC00;left:800px; top:10px;}
+    100% {color:#4B0082;left:1000px; top:10px;}
+ 
+}
+
+.infoText{
+/* 	padding-left:11.5cm;  */
+     top:100px; */
+ /*    visibility:hidden; */
+    height: 20px;
+    position: relative;
+	color: blue;
+	font-size:15px;
+	font-family:"Times New Roman", Georgia, Serif;
+
+}
+
+.mailInfo{
+    top:70px; */
+    height: 20px;
+    position: relative;
+	color: green;
+	font-size:20px;
+	font-weight:normal;
+	font-family:"Times New Roman", Georgia, Serif;
+}
+.mailInfo2{
+    top:80px; */
+    height: 15px;
+    position: relative;
+	color: #8000ff;
+	font-size:15px;
+	font-style:italic;
+	font-family:"Times New Roman", Georgia, Serif;
+}
+
+.pad{
+padding-left:10cm;	
+}
+
+.selection{
+/* 	padding-left:10cm; */
+    .pad;
+    top:100px;
+ /*    visibility:hidden; */
+    height: 20px;
+    position: relative;
+	color: 		#8A2BE2;
+	font-size:15px;
+	font-family:"Times New Roman", Georgia, Serif;
+    animation-name: selection;
+    animation-duration: 20s;
+    animation-timing-function:linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-delay: 0s;
+    animation-fill-mode:inherit;
+}
+
+
+/* The animation code */
+@keyframes selection{
+    0%   {color:white;left:0px; top:100px;}
+    25%  {color:blue;left:200px; top:100px;}
+    50%  {color:#8A2BE2;left:400px; top:100px;}
+    75%  {color:green;left:600px; top:100px;}    
+    100% {color:white;left:800px; top:100px;}
+ 
+}
+.Heading{
+	margin: auto;
+ 	text-align: center; 
+    top:10px;
+ /*    visibility:hidden; */
+    height: 20px;
+    position: relative;
+	color: 		#8A2BE2;
+	font-size:25px;
+	font-family:"Times New Roman", Georgia, Serif;
+    animation-name: Heading;
+    animation-duration: 2.5s;
+    animation-timing-function:linear;
+    animation-iteration-count: infinite;
+    animation-direction: none;
+    animation-delay: 0s;
+    animation-fill-mode:inherit;
+}
+
+
+/* The animation code */
+@keyframes Heading{
+ /*   0%   {color:white;top:10px;} */
+    0%  {color:#8A2BE2;top:10px;}
+    10% {color:white;top:10px;}
+    20% {color:red;top:10px;}    
+    30% {color:white;top:10px;}
+    40% {color:orange;top:10px;}
+    50% {color:white;top:10px;}
+    60% {color:blue;top:10px;}
+    70% {color:white;top:10px;}
+    80% {color:violet;top:10px;}
+    90% {color:white;top:10px;}
+    100% {color:black;top:10px;} 
+}
+
+.submitted, tr:nth-child(even).submitted  {
+	background-color: lightgreen !important;
+}
+
+.submitted hover, .sapUiTable tr.submitted.sapUiTableRowHvr>td   {
+	background-color: #00cc00 !important;
+}
+
+.transparent {
+	background-color: transparent;
+}
+
+.sapUiTheme-sap_bluecrystal {
+	font-size: 14px;
+}
+
+.extHidePanel {
+  width: 0px !important;
+}
+
+.sapMListTblCell {
+	padding: 0 0.1rem 0 0.1rem;
+}
+
+
+#__item12-__table0-0_cell0   {
+	text-align: left !important;
+}
+
+
+.sapMITBContent {
+	padding: 0;
+}
+
+.halfSizeText {
+	font-size: .5rem
+}
+
+.hasNotes {
+	color: yellow
+}
+
+
+.customerBalancesPanel .sapMPanelContent {
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-bottom: 0px;
+	border-bottom: 1px solid #e5e5e5;
+
+}
+
+tr:nth-child(even)  {
+	background-color: #f7f7f7 !important;
+} 
+
+.documentName {
+	font-family: Verdana;
+	font-size: medium;
+}
+
+.warning{
+
+font-size: small;	
+color: #9F6000;
+background-color: #FEEFB3;
+}
+
+/*  DocFlow CSS*/
+.salesUIiconText {
+	padding: 0.75rem;
+}
+
+.salesUILinkText{
+padding: 0.75rem;	
+}
+ 
+.salesUIiconText .sapMRI {
+	vertical-align: initial;
+}
+
+.salesUITextButton{
+display: inline-block;
+font-size: medium;	
+color: black;
+vertical-align: middle;
+margin-top: 4px;
+margin-left: 2px;
+padding-right:10px;
+}
+
+.buttondelete .sapMBtnInner  {
+height: 2.500rem;
+min-width: 2.500rem;
+margin: 0;
+padding: 0;
+vertical-align: top;
+border: 1px solid #bfbfbf;
+border-color: blue;
+border-radius: 0.125rem;
+font-family: Arial,Helvetica,sans-serif;
+background-color:blue !important;
+height:24px !important;
+width:4.5rem;
+vertical-align: middle !important;
+color: white !important; 
+text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+background-image: none;
+
+}
+
+
+.buttoncopy1{
+background-color: #00FF00 !important;
+height:24px !important;
+vertical-align: middle !important;
+
+}
+.sap-desktop .sapMActionSheetPopover.sapMPopover {
+    background-color: rgba(1, 36, 58, 0.96);
+}
+
+.sap-desktop .sapMIBar.sapMFooter-CTX {
+    background-color: rgba(1, 36, 58, 0.96);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color:#036DA9 !important;
+}
+
+.sapUiTable>.sapUiTableTbr.sapUiTableMTbr {
+    height:2rem !important;
+}
+
+.gdt_discount input{
+font-weight: bold;	
+color: blue !important;
+}
+
+.cust_discount input{
+font-weight: bold;
+color: #0000ff !important;	
+}
+
+.ColumnLabel{
+font-weight: bold;
+font-family: Arial !important;	
+text-align: center !important;	
+}
+
+.ColumnLabel input{
+font-weight: bold;	
+}
+
+
+.TopMargin{
+padding-bottom: 3cm;	
+}
+
+.Description input{
+color:blue;	
+}
+
+.Warning input{
+color:orange;	
+}
+
+.Error input{
+color:red;	
+}
+.TextFormat{
+font-weight: bold;
+color:red;		
+}
+
+.ImportErrorPartIDS{
+/* background-color:#036DA9 !important;	 */
+color: black !important;
+font-weight: bold !important;
+font-family: Arial !important;	
+text-align: center !important;
+}

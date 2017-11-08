@@ -1,0 +1,89 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:cl="sap.ui.commons.layout" xmlns:c="sap.ui.commons" 
+	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Dialog id='detailLineItemsImportErrorsDialog' title="Import Failed - Unrecognized Parts" state="Error" contentWidth="1300px" >
+		<FlexBox alignItems="Center" justifyContent="Center">
+          <items>
+			<Text width="1200px" wrapping="true" textAlign="Center" text="Errors were detected when importing line item data and the import was aborted.  The following parts were not recognized.  Please press 'Email Master Data' to send an email with these parts listed to the Master Data team, or press cancel to return to the Network-Acitivity Component UI." />
+          </items>
+        </FlexBox>
+		<ScrollContainer id='importErrorsContainer' height="100%" vertical="true" horizontal="true">
+			<Table items="{importErrors>/}" id="errorsTable" fixedLayout="false" width="1300px">
+			    <columns>
+				    <Column><Text class='ImportErrorPartIDS' text="No #" width="50px" wrapping="false" /></Column>
+				    <Column><Text class='ImportErrorPartIDS' text="Manufacturer Part #" textAlign='Center' width="120px" wrapping="true" /></Column>
+				    <Column><Text class='ImportErrorPartIDS' text="SAP #" wrapping="false" textAlign='Center' width="80px" /></Column>
+				    <Column><Text class='ImportErrorPartIDS' text="Short Description" textAlign='Center' width="150px" wrapping="false" /></Column>
+				    <Column><Text class='ImportErrorPartIDS' text="UOM"  width="50px" textAlign='Center' wrapping="false" /></Column>
+				    <Column><Text class='ImportErrorPartIDS' text="Long Description"  textAlign='Center'  width="200px" wrapping="false" /></Column>
+				    <Column><Text class='ImportErrorPartIDS' text="Manufacturer Name" textAlign='Center' width="200px" wrapping="false" /></Column>
+				    <Column><Text class='ImportErrorPartIDS' text="Material Type" textAlign='Center'  width="120px" wrapping="false" /></Column>
+				    <Column><Text class='ImportErrorPartIDS' text="Material Group" textAlign='Center' width="120px" wrapping="false" /></Column>
+			    </columns>
+			    <items>
+		      		<ColumnListItem vAlign="Middle" class="oddLine">
+		        		<cells>
+					    	<Input width="50px" value="{path: 'importErrors>ItemNumber', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 3} }" editable="false" />
+					    	<Input width="120px" value="{path: 'importErrors>Mfrpn', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 40} }" editable="false" />
+	      					<Input width="80px" value="{importErrors>Material}" type="Text" editable="true" />
+					    	<Input width="150px" value="{importErrors>MatlDesc}" type="Text" editable="true" />
+					    <!-- 	<Input width="50px" value="{importErrors>BaseUom}" type="Text" editable="true" /> -->
+					    	<Input app:rowid="{importErrors>ItemNumber}" 
+					    	       width="50px" 
+ 			    	               tooltip="{path: 'importErrors>BaseUom', formatter: '.formatter.baseUomName'}" 
+ 			    	               id="importErrorsUomId" 
+ 			    	               value="{importErrors>BaseUom}" 
+ 			    	               type="Text" showSuggestion="true" 
+ 			    	               filterSuggests="false" startSuggestion="0" 
+ 			    	               suggest="handleSuggestUom" maxSuggestionWidth="300px" placeholder="" enabled="true" 
+ 			    	               editable="true" change="handleChangeUom"/>
+					    	<Input width="200px" value="{importErrors>LongMatlDesc}" type="Text" editable="true" />
+					    	<!-- <Input width="200px" value="{importErrors>Manufacturerno}" type="Text" editable="true" /> -->
+					       <Input app:rowid="{importErrors>ItemNumber}" 
+					              width="200px" 
+ 			    	              tooltip="SAP Manufacturer ID: {path: 'importErrors>Manufacturerno'}" 
+ 			    	              id="importErrorsmfrId" 
+ 			    	              value="{path: 'importErrors>Manufacturerno', formatter: '.formatter.mfrName'}" 
+ 			    	              type="Text" showSuggestion="true" 
+ 			    	              filterSuggests="false" startSuggestion="0" 
+ 			    	              suggest="handleSuggestMfr" maxSuggestionWidth="300px" placeholder="" enabled="true"
+ 			    	              editable="true" change="handleChangeMfrID"/>	
+ 			    	              
+					   <!--  	<Input width="120px" value="{importErrors>MatlType}" type="Text" editable="true" /> -->
+					    	<Input app:rowid="{importErrors>ItemNumber}" 
+					    	       width="120px" 
+ 			    	               tooltip="{path: 'importErrors>MatlType'}" 
+ 			    	               id="importErrorsMatlTypeId" 
+ 			    	               value="{path: 'importErrors>MatlType', formatter: '.formatter.MatlTypeName'}" 
+ 			    	               type="Text" showSuggestion="true" 
+ 			    	               filterSuggests="false" startSuggestion="0" 
+ 			    	               suggest="handleSuggestMaterialType" maxSuggestionWidth="300px" placeholder="" enabled="true" 
+ 			    	               editable="true" change="handleChangeMaterialType"/>
+					    	<!-- <Input width="120px" value="{importErrors>MatlGroup}" editable="true" /> -->	
+					    	<Input app:rowid="{importErrors>ItemNumber}" 
+					    	       width="120px" 
+ 			    	               tooltip="{path: 'importErrors>MatlGroup'}" 
+ 			    	               id="importErrorsMatlGroupId" 
+ 			    	               value="{path: 'importErrors>MatlGroup', formatter: '.formatter.MatlGroupName'}" 
+ 			    	               type="Text" showSuggestion="true" 
+ 			    	               filterSuggests="false" startSuggestion="0" 
+ 			    	               suggest="handleSuggestMaterialGroup" maxSuggestionWidth="300px" placeholder="" enabled="true" 
+ 			    	               editable="true" change="handleChangeMaterialGroup"/>					    	
+					    			    	
+			        	</cells>
+		    		</ColumnListItem>
+		    	</items>
+		  	</Table>
+		</ScrollContainer>
+        <Panel>
+			<Label text="External Notes" design="Bold" />
+			<TextArea id="ExtNotes" width='100%' value="" placeholder="Special instruction Notes" rows="3" editable="{currentState>/isEditMode}" />
+       </Panel>
+	    <Toolbar>
+			<ToolbarSpacer/>
+			<Button icon="sap-icon://excel-attachment" type="Accept" text="Export" press="handleExportErrorPartIDs" />
+			<Button icon="sap-icon://email" type="Emphasized" text="Email Master Data" press="onEmailMasterData" />
+			<Button icon="sap-icon://system-exit" type="Reject"  text="Cancel" press="onCancelImportErrorDialog" />
+	    </Toolbar>
+	 
+   	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core">
+<!-- 		search="handleTaxJurisdictionearchHelpSearch" change="handleTaxJurisdictionearchHelpSearch" -->
+	<TableSelectDialog id='TaxJurisdictionNumberSearchID'
+		contentWidth="500px" noDataText="Loading...." title="Please select Tax Jurisdiction"
+		class="partHelp" items="{TaxJurisdiction>/}">
+		<columns>
+ 			<Column hAlign="Center" width="60px" visible="false">
+				<Text text="Country" class='ColumnLabel' />
+			</Column> 
+			<Column hAlign="Center" width="70px">
+				<Text text="Region/State" class='ColumnLabel' />
+			</Column>
+			<Column hAlign="Center" width="120px">
+				<Text text="City" class='ColumnLabel' />
+			</Column>
+			<Column hAlign="Center" width="80px">
+				<Text text="PostalCode" class='ColumnLabel' />
+			</Column>
+			<Column hAlign="Center" width="60px">
+				<Text text="Txjcd" class='ColumnLabel' />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+				    <ObjectIdentifier text="{TaxJurisdiction>Country}" />
+					<Text text="{TaxJurisdiction>State}" />
+					<Text text="{TaxJurisdiction>City}" />
+					<Text text="{TaxJurisdiction>Zipcode}" />
+					<Text text="{TaxJurisdiction>Txjcd}" />
+				</cells>
+			</ColumnListItem>
+		</items>
+
+	</TableSelectDialog>
+</core:FragmentDefinition>

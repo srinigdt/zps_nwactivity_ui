@@ -1,0 +1,165 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout"
+	xmlns:cl="sap.ui.commons.layout" xmlns:c="sap.ui.commons" xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:t="sap.ui.table"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+
+	<Panel> 
+
+		<t:Table class="sapUiSizeCompact" rows="{mailComposeLines>/}" visible="{=(${currentState>/isMailCompose})}"
+			id="PartIDsLineItemsTable" visibleRowCount="10"
+			showColumnVisibilityMenu="false" selectionMode="None">
+			<t:toolbar>
+				<Toolbar>
+					<ToolbarSpacer />
+					<Button icon="sap-icon://edit" type="Emphasized" text="{i18n>EditButtonText}"
+						visible="{=(${currentState>/canEdit})}" press="onEditCancelButtonPress" />
+					<Button id="addBlankMailLineId" icon="sap-icon://add" text="Add Row"
+						enabled="{currentState>/isEditMode}" visible="{currentState>/isEditMode}"
+						press="handleAddDetailLine" />
+					<Button type="Reject" icon="sap-icon://sys-cancel" text="{i18n>CancelButtonText}"
+						press="onEditCancelButtonPress" visible="{=(${currentState>/isEditMode})}" />
+					<Button icon="sap-icon://excel-attachment" type="Accept"
+						id="mailComposeExportH"
+						visible="{=(${currentState>/isMailTab} &amp;&amp; ${currentState>/isEditMode} )}"
+						text="Export" press="handleExportErrorPartIDs" />
+					<Button icon="sap-icon://email" type="Emphasized" text="Email Master Data"
+						id="mailComposeSendMailH"
+						visible="{=(${currentState>/isMailTab} &amp;&amp; ${currentState>/isEditMode} )}"
+						press="onEmailMasterData" />
+					<Button icon="sap-icon://email" type="Emphasized" text="Compose"
+						visible="{=(!${currentState>/isMailCompose} &amp;&amp; ${currentState>/isMailTab})}"
+						press="handleMailCompose" />
+				</Toolbar>
+			</t:toolbar>
+			<t:columns>
+				<t:Column width="50px">
+					<Text class='ImportErrorPartIDS' text="No #" width="50px"
+						wrapping="false" />
+					<t:template>
+						<Input width="50px"
+							value="{path: 'mailComposeLines>ItemNumber', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 3} }"
+							editable="false" />
+					</t:template>
+				</t:Column>
+
+				<t:Column>
+					<Text class='ImportErrorPartIDS' text="Manufacturer Part #"
+						textAlign='Center' width="120px" wrapping="true" />
+					<t:template>
+						<Input width="160px"
+							value="{path: 'mailComposeLines>Mfrpn', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 40} }"
+							change="onChangePartID" editable="{currentState>/isEditMode}" />
+					</t:template>
+				</t:Column>
+
+				<t:Column width="100px">
+					<Text class='ImportErrorPartIDS' text="SAP #" wrapping="false"
+						textAlign='Center' width="80px" />
+					<t:template>
+						<Input width="80px" value="{mailComposeLines>Material}"
+							type="Text" editable="{currentState>/isEditMode}" />
+					</t:template>
+				</t:Column>
+
+				<t:Column>
+					<Text class='ImportErrorPartIDS' text="Short Description"
+						textAlign='Center' width="150px" wrapping="false" />
+					<t:template>
+						<Input width="150px" value="{mailComposeLines>MatlDesc}"
+							type="Text" editable="{currentState>/isEditMode}" />
+					</t:template>
+				</t:Column>
+
+				<t:Column width="60px">
+					<Text class='ImportErrorPartIDS' text="UOM" width="50px"
+						textAlign='Center' wrapping="false" />
+					<t:template>
+						<Input app:rowid="{mailComposeLines>ItemNumber}" width="50px"
+							tooltip="{path: 'mailComposeLines>BaseUom', formatter: '.formatter.baseUomName'}"
+							id="mailComposeLinesUomIdM" value="{mailComposeLines>BaseUom}"
+							type="Text" showSuggestion="true" filterSuggests="false"
+							startSuggestion="0" suggest="handleSuggestUom"
+							maxSuggestionWidth="300px" placeholder="" enabled="true"
+							editable="{currentState>/isEditMode}" change="handleChangeUom" />
+					</t:template>
+				</t:Column>
+
+				<t:Column>
+					<Text class='ImportErrorPartIDS' text="Long Description"
+						textAlign='Center' width="200px" wrapping="false" />
+					<t:template>
+						<Input width="200px" value="{mailComposeLines>LongMatlDesc}"
+							type="Text" editable="{currentState>/isEditMode}" />
+					</t:template>
+				</t:Column>
+
+				<t:Column>
+					<Text class='ImportErrorPartIDS' text="Manufacturer Name"
+						textAlign='Center' width="200px" wrapping="false" />
+					<t:template>
+						<Input app:rowid="{mailComposeLines>ItemNumber}" width="200px"
+							tooltip="SAP Manufacturer ID: {path: 'mailComposeLines>Manufacturerno'}"
+							id="mailComposeLinesmfrIdM"
+							value="{path: 'mailComposeLines>Manufacturerno', formatter: '.formatter.mfrName'}"
+							type="Text" showSuggestion="true" filterSuggests="false"
+							startSuggestion="0" suggest="handleSuggestMfr"
+							maxSuggestionWidth="300px" placeholder="" enabled="true"
+							editable="{currentState>/isEditMode}" change="handleChangeMfrID" />
+					</t:template>
+				</t:Column>
+
+
+				<t:Column>
+					<Text class='ImportErrorPartIDS' text="Material Type"
+						textAlign='Center' width="120px" wrapping="false" />
+					<t:template>
+						<Input app:rowid="{mailComposeLines>ItemNumber}" width="140px"
+							tooltip="{path: 'mailComposeLines>MatlType'}" id="mailComposeLinesMatlTypeIdM"
+							value="{path: 'mailComposeLines>MatlType', formatter: '.formatter.MatlTypeName'}"
+							type="Text" showSuggestion="true" filterSuggests="false"
+							startSuggestion="0" suggest="handleSuggestMaterialType"
+							maxSuggestionWidth="300px" placeholder="" enabled="true"
+							editable="{currentState>/isEditMode}" change="handleChangeMaterialType" />
+					</t:template>
+				</t:Column>
+
+				<t:Column>
+					<Text class='ImportErrorPartIDS' text="Material Group"
+						textAlign='Center' width="120px" wrapping="false" />
+					<t:template>
+						<Input app:rowid="{mailComposeLines>ItemNumber}" width="140px"
+							tooltip="{path: 'mailComposeLines>MatlGroup'}" id="mailComposeLinesMatlGroupIdM"
+							value="{path: 'mailComposeLines>MatlGroup', formatter: '.formatter.MatlGroupName'}"
+							type="Text" showSuggestion="true" filterSuggests="false"
+							startSuggestion="0" suggest="handleSuggestMaterialGroup"
+							maxSuggestionWidth="300px" placeholder="" enabled="true"
+							editable="{currentState>/isEditMode}" change="handleChangeMaterialGroup" />
+					</t:template>
+				</t:Column>
+
+
+			</t:columns>
+		</t:Table>
+	</Panel>
+
+
+	<Panel visible="{=(${currentState>/isMailCompose})}">
+		<Label text="External Notes" design="Bold" />
+		<TextArea id="ExtNotesM" width='100%' value=""
+			placeholder="Special instruction Notes" rows="3"
+			editable="{currentState>/isEditMode}" />
+	</Panel>
+	<Panel visible="{=(!${currentState>/isMailCompose})}">
+		<core:HTML content='&lt;p&gt; &lt;p&gt;' />
+		<FlexBox alignItems="Center" justifyContent="Center">
+			<Text id="mailInfo" visible="true" text="Mail has been sent successfully" />
+		</FlexBox>
+		<FlexBox alignItems="Center" justifyContent="Center">
+			<Text id="mailInfo2" visible="true"
+				text="Please click on compose to create new one or click on tab to navigate to respective tab" />
+		</FlexBox>
+		<core:HTML content='&lt;p class=&quot;TopMargin&quot;&gt; &lt;p&gt;'>
+		</core:HTML>
+	</Panel>
+</core:FragmentDefinition>

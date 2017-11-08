@@ -1,0 +1,379 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:cl="sap.ui.commons.layout"
+	xmlns:c="sap.ui.commons" xmlns:t="sap.ui.table" xmlns:tt="sap.ui.table.TreeTable"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<Dialog
+		title="Delivery Address for item {lineItem>/ItemNumber} {lineItem>/Material} / {lineItem>/Activity}"
+		id="DialogDeliveryAddress" draggable="true" contentWidth="500px"
+		class="sapUiSizeCompact">
+		<Panel id='PanelDeliveryAddressSelection' class="sapUiSizeCompact"
+			expandable="false" expanded="true" visible="true">
+			<content>
+				<l:Grid class="gridMarginTop" vSpacing="1rem" hSpacing="0rem"
+					defaultSpan="L6 M6 S12">
+					<l:content>
+
+						<Input editable="false" value="Address Number">
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+
+						<Input width="90px" tooltip="Delivery Address #" id="DeliveryAddressID"
+							valueStateText="Enter Valid Address Number"
+							showValueStateMessage="false"
+							value="{path: 'lineItem>/AddrNo2', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 10} }"
+							placeholder="Address Number" showValueHelp="true"
+							valueHelpRequest="handleAddressSearchHelp" change="handleChangeAddress"
+							submit="handleChangeAddress" editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+						<Input editable="false" value="Customer">
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input width="90px" tooltip="Customer ID" id="CustomerDeliveryAddressID"
+							valueStateText="Enter Valid Customer Number"
+							showValueStateMessage="false"
+							value="{path: 'lineItem>/Customer', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 10} }"
+							placeholder="Customer Number" showValueHelp="true"
+							valueHelpRequest="handleCustomerSearchHelp" change="handleChangeCustomerID"
+							submit="handleChangeCustomerID" editable="{currentState>/isEditMode}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+						<Input editable="false" value="Address Number">
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+
+						<Input placeholder="" width='90px' value="{lineItem>/AddrNo}"
+							editable="false">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+					</l:content>
+				</l:Grid>
+
+			</content>
+
+		</Panel>
+		<Panel id='PanelDeliveryAddress' class="sapUiSizeCompact"
+			headerText="Address" expandable="false" expanded="true" visible="true">
+			<content>
+				<l:Grid class="gridMarginTop" vSpacing="1rem" hSpacing="0rem"
+					defaultSpan="L6 M6 S12">
+					<l:content>
+
+						<Input editable="false" value="Title" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+<!-- 						<Input placeholder="" value="{lineItem>/DeliveryAddress/Title}"
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}">
+							<layoutData>
+								<l:GridData span="L2 M2 S2" />
+							</layoutData>
+						</Input> -->
+                        <Input value="{lineItem>/DeliveryAddress/Title}" type="Text"
+							showSuggestion="true" filterSuggests="false" startSuggestion="0"
+							suggest="handleSuggestTitle" maxSuggestionWidth="150px"
+							placeholder=""
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}"
+							change="handleChangeTitle">
+							<layoutData>
+								<l:GridData span="L2 M2 S2" />
+							</layoutData>
+
+						</Input>
+						<Input value="{path:'lineItem>/DeliveryAddress/Title',formatter:'.formatter.TitleName'}" placeholder="" class="Description" editable="false">
+							<layoutData>
+								<l:GridData span="L7 M7 S7" />
+							</layoutData>
+						</Input>
+
+						<!-- 2nd Row -->
+
+						<Input editable="false" value="Name" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" value="{lineItem>/DeliveryAddress/Name1}"
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" class="" value="" editable="false">
+							<layoutData>
+								<l:GridData span="L4 M4 S4" />
+							</layoutData>
+						</Input>
+
+
+						<!-- 3rd Row -->
+
+						<Input editable="false" value="Name 2" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" value="{lineItem>/DeliveryAddress/Name2}"
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" class="Description" value="{}"
+							editable="false">
+							<layoutData>
+								<l:GridData span="L4 M4 S4" />
+							</layoutData>
+						</Input>
+
+
+						<!-- 4th Row -->
+						<Input editable="false" value="Name 3" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" width='205px'
+							value="{lineItem>/DeliveryAddress/Name3}"
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+
+						<!-- 5th Row -->
+						<Input editable="false" value="Name 4" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" width='205px'
+							value="{lineItem>/DeliveryAddress/Name4}"
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+						<!-- Blank Row -->
+						<Input editable="false">
+							<layoutData>
+								<l:GridData span="L12 M12 S12" />
+							</layoutData>
+						</Input>
+
+
+
+						<!-- 6th Row -->
+						<Input editable="false" value="Street" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" width='220px'
+							value="{lineItem>/DeliveryAddress/Street}"
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+						<!-- 7th Row -->
+						<Input editable="false" value="House Number" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" width='70px'
+							value="{lineItem>/DeliveryAddress/HouseNum1}"
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+						<!-- Blank Row -->
+						<Input editable="false">
+							<layoutData>
+								<l:GridData span="L12 M12 S12" />
+							</layoutData>
+						</Input>
+
+
+
+
+
+						<!-- 8th Row -->
+						<Input editable="false" value="Country" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<!-- <Input placeholder="" value="{deliveryAddress>/Country}" editable="true"> 
+							<layoutData> <l:GridData span="L1 M1 S1" /> </layoutData> </Input> -->
+						<Input value="{lineItem>/DeliveryAddress/Country}" type="Text"
+							showSuggestion="true" filterSuggests="false" startSuggestion="0"
+							suggest="handleSuggestCountry" maxSuggestionWidth="200px"
+							placeholder=""
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}"
+							change="handleChangeCountry">
+							<layoutData>
+								<l:GridData span="L1 M1 S1" />
+							</layoutData>
+
+						</Input>
+						<Input placeholder="" class="Description"
+							value="{path:'lineItem>/DeliveryAddress/Country',formatter: '.formatter.countryName'}"
+							editable="false">
+							<layoutData>
+								<l:GridData span="L8 M8 S8" />
+							</layoutData>
+						</Input>
+
+						<!-- 9th Row -->
+						<Input editable="false" value="Region" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<!-- <Input placeholder="" value="{deliveryAddress>/Region}" editable="true"> 
+							<layoutData> <l:GridData span="L1 M1 S1" /> </layoutData> </Input> -->
+						<Input value="{lineItem>/DeliveryAddress/Region}" type="Text"
+							showSuggestion="true" filterSuggests="false" startSuggestion="0"
+							suggest="handleSuggestRegion" maxSuggestionWidth="200px"
+							placeholder=""
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}"
+							change="handleChangeRegion">
+							<layoutData>
+								<l:GridData span="L1 M1 S1" />
+							</layoutData>
+
+						</Input>
+
+						<Input placeholder="" class="Description"
+							value="{path:'lineItem>/DeliveryAddress/Region',formatter: '.formatter.regionName'}"
+							editable="false">
+							<layoutData>
+								<l:GridData span="L8 M8 S8" />
+							</layoutData>
+						</Input>
+						
+						<!-- 10th Row -->
+						<Input editable="false" value="City" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" width='220px'
+							value="{lineItem>/DeliveryAddress/City1}"
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+						<!-- 11th Row -->
+						<Input editable="false" value="Postal Code" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						<Input placeholder="" width='90px'
+							value="{lineItem>/DeliveryAddress/PostCode1}"
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}">
+							<layoutData>
+								<l:GridData span="L9 M9 S9" />
+							</layoutData>
+						</Input>
+
+						<!-- Blank Row -->
+						<Input editable="false">
+							<layoutData>
+								<l:GridData span="L12 M12 S12" />
+							</layoutData>
+						</Input>
+
+						<!-- 12th Row -->
+						<Input editable="false" value="Language" class='ColumnLabel'>
+							<layoutData>
+								<l:GridData span="L3 M3 S3" />
+							</layoutData>
+						</Input>
+						
+<!-- 						<Input placeholder="" value="{lineItem>/DeliveryAddress/Langu}"
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}">
+							<layoutData>
+								<l:GridData span="L1 M1 S1" />
+							</layoutData>
+						</Input> -->
+                       <Input value="{lineItem>/DeliveryAddress/Langu}" type="Text"
+							showSuggestion="true" filterSuggests="false" startSuggestion="0"
+							suggest="handleSuggestLanguage" maxSuggestionWidth="200px"
+							placeholder=""
+							editable="{= (${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}"
+							change="handleChangeLanguage">
+							<layoutData>
+								<l:GridData span="L1 M1 S1" />
+							</layoutData>
+
+						</Input>						
+						
+						<Input placeholder="" class="Description"
+							value="{path:'lineItem>/DeliveryAddress/Langu',formatter:'.formatter.languageText'}" editable="false">
+							<layoutData>
+								<l:GridData span="L8 M8 S8" />
+							</layoutData>
+						</Input>
+
+
+					</l:content>
+				</l:Grid>
+             <CheckBox selected="{lineItem>/IsAddrCopyFromItem}"  text="Set to all Items" class="TextFormat"
+                       editable="{= (${currentState>/isEditMode} &amp;&amp; !${lineItem>/Db} )}">
+             </CheckBox>
+			
+			</content>
+         
+		</Panel>
+
+		<Toolbar design="Auto">
+			<ToolbarSpacer />
+			<Button text="Ok" tooltip="Confirm to Continue" visible="{currentState>/isEditMode}"
+				type="Accept" press="handleConfirmDeliveryAddrDialog" icon="sap-icon://accept" />
+			<Button text="Copy"
+				tooltip="Create New delivery Address by Copying the existing one"
+				visible="{= (!${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}"
+				type="Emphasized" press="handleCopyCreateDeliveryAddress" icon="sap-icon://duplicate" />
+			<Button text="New" tooltip="Create New delivery Address"
+				visible="{= (!${path:'lineItem>/DeliveryAddressFlag',formatter:'.formatter.DeliveryAddressEditable'} &amp;&amp; ${currentState>/isEditMode})}"
+				type="Emphasized" class="buttondelete" press="handleCreateNewDeliveryAddress" icon="sap-icon://create" />
+			<Button text="Cancel" tooltip="Cancel the changes and Exit"
+				visible="{currentState>/isEditMode}" type="Reject"
+				press="handleCancelDeliveryAddrDialog" icon="sap-icon://sys-cancel" />
+			<Button text="Close" tooltip="Close Popup Delivery Address Box"
+				visible="{=(!${currentState>/isEditMode})}" type="Emphasized"
+				press="handleCloseDeliveryAddrDialog" icon="sap-icon://sys-cancel" />
+		</Toolbar>
+		<!-- <beginButton> <Button text="Ok" app:dialogType="Msg" press="handleConfirmDeliveryAddrDialog" 
+			/> </beginButton> <endButton> <Button text="Cancel" app:dialogType="Msg" 
+			press="handleCancelDeliveryAddrDialog" /> </endButton> -->
+	</Dialog>
+</core:FragmentDefinition>

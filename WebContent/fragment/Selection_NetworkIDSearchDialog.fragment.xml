@@ -1,0 +1,55 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+   <TableSelectDialog
+   	id='SelectionNetworkIDSearchDialog'
+   	contentWidth="900px"
+   	noDataText ="Loading...."
+    title="Project's Network Number Search"
+    search="onNetworkIDSearch"
+    change="onNetworkIDSearch"
+    class="partHelp"
+    items="{ProjectNetworks>/}">
+       <columns>
+           <Column hAlign="Left" class='ColumnLabel' 
+                   width="8em">
+               <Text text="SAP Project #" />
+           </Column>
+           <Column  width="200px" class='ColumnLabel' >
+               <Text text="Description " />
+           </Column>
+           <Column  width="8em" class='ColumnLabel' >
+               <Text text="Network #" />
+           </Column>
+           <Column class='ColumnLabel' >
+               <Text text="Description" />
+           </Column>
+           <Column  width="6em"  >
+               <Text text="Activity #" class='ColumnLabel' />
+           </Column>
+           <Column  >
+               <Text text="Description" class='ColumnLabel' />
+           </Column>
+       </columns>
+       <items>
+           <ColumnListItem>
+               <cells>
+                   <ObjectIdentifier
+                           text="{ProjectNetworks>ProjectID}"/>
+                   <Text
+                           text="{ProjectNetworks>ProjectDescription}" />
+                   <Text
+                           text="{ProjectNetworks>NetworkID}" />
+                   <Text
+                           text="{ProjectNetworks>NetworkDescription}" />
+                   <Text
+                           text="{ProjectNetworks>ActivityID}" />
+                    <Text
+                           text="{ProjectNetworks>ActivityDescription}" />        
+               </cells>
+           </ColumnListItem>
+       </items>
+
+  </TableSelectDialog>
+  <BusyDialog id='ProjNwSearchBusy' text="Searching..." showCancelButton="false"/>
+</core:FragmentDefinition>

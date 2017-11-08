@@ -1,0 +1,77 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" controllerName="gdt.ui.ps.networkcomp.controllers.Details"
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml"
+	busyIndicatorDelay="0">
+	<Page
+		title="Project : {path: 'currentData>/Project'} , Network:{path: 'currentData>/Network'}, Activity:{path: 'currentData>/Activity' }({path: 'currentData>/ActivityText' })"
+		id="NwActivityHeaderItems" showNavButton="{device>/isNoPhone}"
+		navButtonPress="onNavBack" class="sapUiFioriObjectPage">
+		<content>
+			<Text id="info2" visible="false" text="Welcome to Demo Session" />
+			<IconTabBar id="iconTabBar" class="sapUiFioriObjectPage"
+				select="onSelectTab" expanded="{device>/isNoPhone}">
+				<items>
+					<IconTabFilter id="activityHeaderTab" icon="sap-icon://header"
+						text="{i18n>activityHeaderTab}" key="activityHeaderTab">
+						<content>
+							<core:Fragment fragmentName="gdt.ui.ps.networkcomp.fragment.Details_HeaderTab"
+								type="XML" />
+						</content>
+					</IconTabFilter>
+					<IconTabFilter id="activityItemTab" icon="sap-icon://list"
+						text="{i18n>activityItemTab}" key="activityItemTab">
+						<content>
+
+							<core:Fragment fragmentName="gdt.ui.ps.networkcomp.fragment.Details_ItemsTab"
+								type="XML" />
+						</content>
+					</IconTabFilter>
+					<IconTabFilter id="deliverynotesTab" icon="sap-icon://notes"
+						text="{i18n>notes}" key="notesTab">
+						<content>
+							<core:Fragment fragmentName="gdt.ui.ps.networkcomp.fragment.Details_NotesTab"
+								type="XML" />
+						</content>
+					</IconTabFilter>
+					<IconTabFilter id="mailComposeTab" icon="sap-icon://arobase"
+						text="{i18n>mailCompose}" key="mailcomposeTab">
+						<content>
+							<core:Fragment 
+								fragmentName="gdt.ui.ps.networkcomp.fragment.Details_MailComposeTab"
+								type="XML" />
+						</content>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</content>
+		<footer>
+
+			<Toolbar class="sapUiSizeCompact">
+				<ToolbarSpacer />
+				<Button type="Reject" icon="sap-icon://sys-cancel" text="{i18n>CancelButtonText}"
+					press="onEditCancelButtonPress"
+					visible="{=(${currentState>/isEditMode} &amp;&amp; ${currentState>/isMailCompose})}" />
+				<Button icon="sap-icon://delete" type="Emphasized"
+					text="{i18n>DeleteButtonText}" press="onDeleteLineItems"
+					visible="{=(${currentState>/isEditMode} &amp;&amp; ${currentState>/deleteEnable} &amp;&amp; !${currentState>/isMailTab} )}" />
+				<Button icon="sap-icon://edit" type="Emphasized" text="{i18n>EditButtonText}"
+					visible="{=(${currentState>/canEdit} &amp;&amp; ${currentState>/isMailCompose} )}"
+					press="onEditCancelButtonPress" />
+				<Button type="Accept" icon="sap-icon://create-session" text="{i18n>SaveButtonText}"
+					press="onSaveNwActivityItems"
+					visible="{=(${currentState>/isEditMode} &amp;&amp; !(${currentState>/deleteEnable}) &amp;&amp; !${currentState>/isMailTab} )}" />
+				<Button icon="sap-icon://excel-attachment" type="Accept" id="mailComposeExport"
+				    visible="{=(${currentState>/isMailCompose} &amp;&amp; ${currentState>/isMailTab} &amp;&amp; ${currentState>/isEditMode} )}"
+					text="Export" press="handleExportErrorPartIDs" />
+				<Button icon="sap-icon://email" type="Emphasized" text="Email Master Data"
+				    id="mailComposeSendMail"
+				    visible="{=(${currentState>/isMailCompose} &amp;&amp; ${currentState>/isMailTab} &amp;&amp; ${currentState>/isEditMode} )}"
+					press="onEmailMasterData" />
+				<Button icon="sap-icon://email" type="Emphasized" text="Compose"
+				    visible="{=(!${currentState>/isMailCompose} &amp;&amp; ${currentState>/isMailTab})}"
+					press="handleMailCompose" />	
+			</Toolbar>
+
+		</footer>
+	</Page>
+</mvc:View>

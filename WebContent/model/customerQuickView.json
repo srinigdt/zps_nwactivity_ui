@@ -1,0 +1,41 @@
+{  
+   "pages":[  
+      {  
+         "pageId":"companyPageId",
+         "header":"Customer Ship-to info",
+         "title":"",
+         "titleUrl":"",
+         "icon":"sap-icon://building",
+         "description":" ",
+         "groups":[  
+            {  
+               "heading":"Contact Details",
+               "elements":[  
+                  {  
+                     "label":"Phone",
+                     "value":"",
+                     "elementType":"phone"
+                  },
+                   {  
+                     "label":"Fax",
+                     "value":" ",
+                     "elementType":"phone"
+                  },
+                  {  
+                     "label":"Email",
+                     "value":"",
+                     "emailSubject":"Subject",
+                     "elementType":"email"
+                  },
+                  {  
+                     "label":"Address",
+                     "value":" ",
+                     "elementType":"text"
+                  }
+               ]
+            }
+            
+         ]
+         }
+   ]
+}

@@ -1,0 +1,63 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+   <TableSelectDialog
+   	id='detailLinePartSearchDialog'
+   	contentWidth="900px"
+   	noDataText ="Loading...."
+    title="Part Number Search"
+    search="onMaterialSearch"
+    change="onMaterialSearch"
+    class="partHelp"
+    items="{materials>/}">
+       <columns>
+           <Column hAlign="Left"
+                   width="10em">
+               <Text text="SAP Part#" />
+           </Column>
+           <Column  width="200px">
+               <Text text="Manufacturer" />
+           </Column>
+           <Column  width="200px">
+               <Text text="Mfr Part #" />
+           </Column>
+           <Column>
+               <Text text="Description#" />
+           </Column>
+           <Column width="60px"  visible="false"
+                   hAlign="Right">
+               <Text text="List Price" />
+           </Column>
+       </columns>
+       <items>
+           <ColumnListItem>
+               <cells>
+                   <ObjectIdentifier
+                           text="{materials>Materialid}"/>
+                   <Text
+                           text="{path: 'materials>Manufacturerno', formatter: '.formatter.mfrName'}" />
+                   <Text
+                           text="{materials>Manufacturerpartid}" />
+                   <Text
+                           text="{materials>Description}" />
+                   <Text
+                           text="{materials>ProcurementInd}" />
+                   <Text
+                           text="{materials>Materialunit}" /> 
+                   <Text
+                           text="{materials>Materialtype}" /> 
+                   <Text
+                           text="{materials>MatlTypeText}" /> 
+                   <Text
+                           text="{materials>Materialgroup}" /> 
+                   <Text
+                           text="{materials>MatlGroupText}" />                            
+                           
+                                                    
+               </cells>
+           </ColumnListItem>
+       </items>
+
+  </TableSelectDialog>
+  <BusyDialog id='partSearchBusy' text="Searching..." showCancelButton="false"/>
+</core:FragmentDefinition>
