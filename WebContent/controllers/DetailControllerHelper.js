@@ -1159,7 +1159,7 @@ _isValidCustomerData=function(customerShipTo,action){
 	var msg="";
 	
 if(action !== "CREATE" && customerShipTo.CustActGrp!=="Z002"){
-	msg = "You are not authorized to change non-Project Ship-to’s"	;
+	msg = "You are not authorized to change non-Project Ship-toâ€™s"	;
 }	
 
 if(msg.length===0){
