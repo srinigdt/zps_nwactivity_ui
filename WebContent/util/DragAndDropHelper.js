@@ -423,7 +423,8 @@ _doImportFile = function(files, append) {
 				missingAddresses = [];
         	
             if (e.target.readyState === FileReader.DONE) { // DONE == 2
-            	if (!view.getModel("currentState").getProperty("/isEditMode")){ toggleEdit(true);}
+            	var vch = view.getController( ).DetailControllerHelper;
+            	if (!view.getModel("currentState").getProperty("/isEditMode")){ vch.toggleEdit(true);}
                 importer.ImportFromCsvFile(e.target.result, view.getModel("currentData"),
                 				view.getModel("lineItems"), errors, missingAddresses,
                 				_createNewLine,_lookupPartID, append)

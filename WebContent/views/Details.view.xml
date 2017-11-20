@@ -50,12 +50,12 @@
 				<ToolbarSpacer />
 				<Button type="Reject" icon="sap-icon://sys-cancel" text="{i18n>CancelButtonText}"
 					press="onEditCancelButtonPress"
-					visible="{=(${currentState>/isEditMode} &amp;&amp; ${currentState>/isMailCompose})}" />
+					visible="{=(${currentState>/isEditMode} )}" />
 				<Button icon="sap-icon://delete" type="Emphasized"
 					text="{i18n>DeleteButtonText}" press="onDeleteLineItems"
 					visible="{=(${currentState>/isEditMode} &amp;&amp; ${currentState>/deleteEnable} &amp;&amp; !${currentState>/isMailTab} )}" />
 				<Button icon="sap-icon://edit" type="Emphasized" text="{i18n>EditButtonText}"
-					visible="{=(${currentState>/canEdit} &amp;&amp; ${currentState>/isMailCompose} )}"
+					visible="{=(${currentState>/canEdit} )}"
 					press="onEditCancelButtonPress" />
 				<Button type="Accept" icon="sap-icon://create-session" text="{i18n>SaveButtonText}"
 					press="onSaveNwActivityItems"
@@ -68,7 +68,7 @@
 				    visible="{=(${currentState>/isMailCompose} &amp;&amp; ${currentState>/isMailTab} &amp;&amp; ${currentState>/isEditMode} )}"
 					press="onEmailMasterData" />
 				<Button icon="sap-icon://email" type="Emphasized" text="Compose"
-				    visible="{=(!${currentState>/isMailCompose} &amp;&amp; ${currentState>/isMailTab})}"
+				    visible="{=(!${currentState>/isMailCompose} &amp;&amp; ${currentState>/isEditMode} &amp;&amp; ${currentState>/isMailTab})}"
 					press="handleMailCompose" />	
 			</Toolbar>
 
