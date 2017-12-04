@@ -4,294 +4,314 @@
 	xmlns="sap.m"
 	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
-	<Panel> 
-	<t:Table class="sapUiSizeCompact" rows="{lineItems>/}" id="lineItemsTable"
-		visibleRowCount='5' showColumnVisibilityMenu='false' selectionMode='None'>
+	<Panel>
+		<t:Table class="sapUiSizeCompact" rows="{lineItems>/}" id="lineItemsTable"
+			visibleRowCount='5' showColumnVisibilityMenu='false' selectionMode='None'>
 
-		<t:toolbar>
-			<Toolbar>
-				<ToolbarSpacer />
-				<Button icon="sap-icon://add" text="Add Row"
-					enabled='{currentState>/isEditMode}' visible='{currentState>/isEditMode}'
-					press="handleAddDetailLine" />
-			    <Button type="Reject" icon="sap-icon://sys-cancel" text="{i18n>CancelButtonText}"
-					press="onEditCancelButtonPress" visible="{currentState>/isEditMode}" />
-			    <Button icon="sap-icon://delete" type="Emphasized"  text="{i18n>DeleteButtonText}"
-					press="onDeleteLineItems" visible="{=(${currentState>/isEditMode} &amp;&amp; ${currentState>/deleteEnable} )}"  /> 	
-				<Button icon="sap-icon://edit" type="Emphasized" text="{i18n>EditButtonText}"
-					visible="{currentState>/canEdit}" press="onEditCancelButtonPress" />
-				<Button type="Accept" icon="sap-icon://create-session" text="{i18n>SaveButtonText}"
-					press="onSaveNwActivityItems" visible="{=(${currentState>/isEditMode} &amp;&amp; !(${currentState>/deleteEnable}) )}" /> 		
-			</Toolbar>
-		</t:toolbar>
-		<t:columns>
-			<t:Column id='SELECTIONID' width="8px" 
-				visible="{currentState>/isEditMode}">
-				<CheckBox id="SELECTION_CHECK" tooltip="Select All items"
-					selected="{currentState>/selection}" select="onSelectAllLines" enabled='{currentState>/isEditMode}' />
-				<t:template>
-					<CheckBox select="OnSelectLine" selected="{path: 'lineItems>Selected'}"
-						enabled="{= (!${lineItems>Deletion} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>
-			<t:Column id="NWID" width="15px" sortProperty="Network" 
-				visible="">
-				<Text text="Network #" textAlign='Center' wrapping="false" tooltip="Network Number" class='ColumnLabel'/>
-				<t:template>
-					<Input
-						value="{path: 'lineItems>Network', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 12} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>
-			<t:Column id="ACTIVITY" width="10px" visible="" > 
-				<Text text="Activity" textAlign='Center' tooltip="Activity Number" class='ColumnLabel'/>
-				<t:template>
-					<Input
-						value="{path: 'lineItems>Activity', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 4} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>
-			<t:Column id="DELIVERYADDRESS" width="8px">
-			    	<Text text="Addr." wrapping="false" />
-			    	<t:template><core:Icon src="sap-icon://offsite-work" width='4px' color="{path:'lineItems>Db'}" tooltip="Delivery Address" press="handleGetDeliveryAddress" /></t:template>
-			    </t:Column>
-			<t:Column id="ITEMNUM" width="10px" visible="true" >
-				<Text text="Item #" textAlign='Center' tooltip="Item number" class='ColumnLabel'/>
-				<t:template>
-					<Input
-						value="{path: 'lineItems>ItemNumber', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 4} }"
-						editable="false" />
-				</t:template>
-			</t:Column>
-			<t:Column id="QTY" width="10px" >
-				<Text text="Qty" textAlign='Center' tooltip="Material Quantity" class='ColumnLabel'/>
-				<t:template>
-					<Input valueStateText="Qty must be between 1 and 9,999,999,999."
-						showValueStateMessage="false"
-						value="{path: 'lineItems>EntryQuantity', type : 'sap.ui.model.type.Integer', formatOptions: { groupingEnabled: true, groupingSeparator:',' }, constraints: {minimum: 1, maximum: 9999999999} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>	
-			    <t:Column id="UOM" width="10px">
-			    	<Text text="UOM" textAlign='Center' class='ColumnLabel'/>
- 			    	<t:template>
- 			    	<Input app:rowid="{lineItems>Component}" 
- 			    	       tooltip="{path: 'lineItems>BaseUom', formatter: '.formatter.baseUomName'}" 
- 			    	       id="UomId" 
- 			    	       value="{lineItems>BaseUom}" 
- 			    	       type="Text" showSuggestion="true" 
- 			    	       filterSuggests="false" startSuggestion="0" 
- 			    	       suggest="handleSuggestUom" maxSuggestionWidth="300px" placeholder="" enabled="true" 
- 			    	       editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" change="handleChangeUom"/></t:template>
-			    </t:Column>				
-			
-			    <t:Column id="MFR" width="45px">
-			    	<Text text="Manufacturer" textAlign='Center' class='ColumnLabel'/>
- 			    	<t:template>
- 			    	<Input app:rowid="{lineItems>Component}" 
- 			    	       tooltip="SAP Manufacturer ID: {path: 'lineItems>Manufacturerno'}" 
- 			    	       id="mfrId" 
- 			    	       value="{path: 'lineItems>Manufacturerno', formatter: '.formatter.mfrName'}" 
- 			    	       type="Text" showSuggestion="true" 
- 			    	       filterSuggests="false" startSuggestion="0" 
- 			    	       suggest="handleSuggestMfr1" maxSuggestionWidth="300px" placeholder="" enabled="true"
- 			    	       editable="false" change="handleChangeMfrID"/></t:template>
-			    </t:Column>					
-			<t:Column id="MFRPN" width="50px" >
-				<Text text="Manfucturer Part #" textAlign='Center' tooltip="Manufacturer Part number" class='ColumnLabel' />
-				<t:template>
-					   <Input app:rowid="{lineItems>Component}"
-						tooltip="SAP Material ID: {path: 'lineItems>Material'}"
-						id="MFRPNID" valueStateText="Requested Part # must not be empty. Maximum 40 characters."
-						showValueStateMessage="false"
-						value="{path: 'lineItems>Mfrpn', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 40} }"
-						placeholder="Part # requested..." showValueHelp="true"
-						valueHelpRequest="onPartIDHelp" change="onChangePartID"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />		
-				</t:template>
-			</t:Column>
-
-			<t:Column id="MATNR" width="20px" visible="false" >
-				<Text text="Material" textAlign='Center' tooltip="Material number" class='ColumnLabel'/>
-				<t:template>
-					<Input
-						value="{path: 'lineItems>Material', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 18} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>						
-
-			<t:Column id="MAKTX" width="56px" visible="true" >
-				<Text text="Description" textAlign='Center' tooltip="Material Description" class='ColumnLabel' />
-				<t:template>
-					<Input
-						value="{path: 'lineItems>MatlDesc', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 40} }"
-						editable="false" />
-				</t:template>
-			</t:Column>					
-			<t:Column id="MTART" width="15px" visible="false" >
-				<Text text="Matl.Type" textAlign='Center' tooltip="Material Type" class='ColumnLabel' />
-				<t:template>
-					<Input
-					    tooltip="{lineItems>MatlTypeText}"
-						value="{path: 'lineItems>MatlType', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 5} }"
-						editable="false" />
-				</t:template>
-			</t:Column>	
-			<t:Column id="MATKL" width="15px" visible="false" >
-				<Text text="Matl.Grp" textAlign='Center' tooltip="Material Group" class='ColumnLabel' />
-				<t:template>
-					<Input
-					    tooltip="{lineItems>MatlGroupText}"
-						value="{path: 'lineItems>MatlGroup', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 5} }"
-						editable="false" />
-				</t:template>
-			</t:Column>	
+			<t:toolbar>
+				<Toolbar>
+					<ToolbarSpacer />
+					<Button icon="sap-icon://add" text="Add Row"
+						enabled='{currentState>/isEditMode}' visible='{currentState>/isEditMode}'
+						press="handleAddDetailLine" />
+					<Button type="Reject" icon="sap-icon://sys-cancel" text="{i18n>CancelButtonText}"
+						press="onEditCancelButtonPress" visible="{currentState>/isEditMode}" />
+					<Button icon="sap-icon://delete" type="Emphasized"
+						text="{i18n>DeleteButtonText}" press="onDeleteLineItems"
+						visible="{=(${currentState>/isEditMode} &amp;&amp; ${currentState>/deleteEnable} )}" />
+					<Button icon="sap-icon://edit" type="Emphasized" text="{i18n>EditButtonText}"
+						visible="{currentState>/canEdit}" press="onEditCancelButtonPress" />
+					<Button type="Accept" icon="sap-icon://create-session" text="{i18n>SaveButtonText}"
+						press="onSaveNwActivityItems"
+						visible="{=(${currentState>/isEditMode} &amp;&amp; !(${currentState>/deleteEnable}) )}" />
+				</Toolbar>
+			</t:toolbar>
+			<t:columns>
+				<t:Column id='SELECTIONID' width="8px"
+					visible="{currentState>/isEditMode}">
+					<CheckBox id="SELECTION_CHECK" tooltip="Select All items"
+						selected="{currentState>/selection}" select="onSelectAllLines"
+						enabled='{currentState>/isEditMode}' />
+					<t:template>
+						<CheckBox select="OnSelectLine" selected="{path: 'lineItems>Selected'}"
+							enabled="{= (!${lineItems>Deletion} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
+				<t:Column id="NWID" width="15px" sortProperty="Network"
+					visible="">
+					<Text text="Network #" textAlign='Center' wrapping="false"
+						tooltip="Network Number" class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>Network', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 12} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
+				<t:Column id="ACTIVITY" width="10px" visible="">
+					<Text text="Activity" textAlign='Center' tooltip="Activity Number"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>Activity', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 4} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
+				<t:Column id="DELIVERYADDRESS" width="8px">
+					<Text text="Addr." wrapping="false" />
+					<t:template>
+						<core:Icon src="sap-icon://offsite-work" width='4px'
+							color="{path:'lineItems>Db'}" tooltip="Delivery Address" press="handleGetDeliveryAddress" />
+					</t:template>
+				</t:Column>
+				<t:Column id="ITEMNUM" width="10px" visible="true">
+					<Text text="Item #" textAlign='Center' tooltip="Item number"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>ItemNumber', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 4} }"
+							editable="false" />
+					</t:template>
+				</t:Column>
+				<t:Column id="QTY" width="10px">
+					<Text text="Qty" textAlign='Center' tooltip="Material Quantity"
+						class='ColumnLabel' />
+					<t:template>
+						<Input valueStateText="Qty must be between 1 and 9,999,999,999."
+							showValueStateMessage="false"
+							value="{path: 'lineItems>EntryQuantity', type : 'sap.ui.model.type.Integer', formatOptions: { groupingEnabled: true, groupingSeparator:',' }, constraints: {minimum: 1, maximum: 9999999999} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
+				<t:Column id="UOM" width="10px">
+					<Text text="UOM" textAlign='Center' class='ColumnLabel' />
+					<t:template>
+						<Input app:rowid="{lineItems>Component}"
+							tooltip="{path: 'lineItems>BaseUom', formatter: '.formatter.baseUomName'}"
+							id="UomId" value="{lineItems>BaseUom}" type="Text"
+							showSuggestion="true" filterSuggests="false" startSuggestion="0"
+							suggest="handleSuggestUom" maxSuggestionWidth="300px"
+							placeholder="" enabled="true"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }"
+							change="handleChangeUom" />
+					</t:template>
+				</t:Column>
 
 
-			
-			<t:Column id="BROUGHTIN" width="20px" >
-				<Text text="Brought In" textAlign='Center' tooltip="iS Brought in to GDT" class='ColumnLabel'/>
-				<t:template>
-					<CheckBox select="onSelectBroughtIn"
-						tooltip="Checked -> 'Yes' else 'No'"
-						app:rowid="{lineItems>ItemNumber}"
-						selected="{path: 'lineItems>Procind', formatter: '.formatter.BroughtIn'}"
-						enabled="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>	
-			<t:Column id="PROCIND" width="15px" 
-				visible="true">
-				<Text text="Proc.Ind"  textAlign='Center' tooltip="Procurement Indicator" class='ColumnLabel'/>
-				<t:template>
-	<!-- 				<Input showValueStateMessage="false"
-						value="{path: 'lineItems>Procind', type : 'sap.ui.model.type.String',constraints: {minimum: 1, maximum: 3} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode} &amp;&amp; (${lineItems>Procind}  === 'WE') ) }" />
+				<t:Column id="MFRPN" width="50px">
+					<Text text="Manfucturer Part #" textAlign='Center'
+						tooltip="Manufacturer Part number" class='ColumnLabel' />
+					<t:template>
+						<Input app:rowid="{lineItems>Component}"
+							tooltip="SAP Material ID: {path: 'lineItems>Material'}" id="MFRPNID"
+							valueStateText="Requested Part # must not be empty. Maximum 40 characters."
+							showValueStateMessage="false"
+							value="{path: 'lineItems>Mfrpn', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 40} }"
+							placeholder="Part # requested..." showValueHelp="true"
+							valueHelpRequest="onPartIDHelp" change="onChangePartID"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
 
- -->
-             	<ComboBox items="{
+				<t:Column id="MATNR" width="20px" visible="false">
+					<Text text="Material" textAlign='Center' tooltip="Material number"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>Material', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 18} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
+
+				<t:Column id="MAKTX" width="56px" visible="true">
+					<Text text="Description" textAlign='Center' tooltip="Material Description"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>MatlDesc', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 40} }"
+							editable="false" />
+					</t:template>
+				</t:Column>
+				<t:Column id="MTART" width="15px" visible="false">
+					<Text text="Matl.Type" textAlign='Center' tooltip="Material Type"
+						class='ColumnLabel' />
+					<t:template>
+						<Input tooltip="{lineItems>MatlTypeText}"
+							value="{path: 'lineItems>MatlType', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 5} }"
+							editable="false" />
+					</t:template>
+				</t:Column>
+				<t:Column id="MATKL" width="15px" visible="false">
+					<Text text="Matl.Grp" textAlign='Center' tooltip="Material Group"
+						class='ColumnLabel' />
+					<t:template>
+						<Input tooltip="{lineItems>MatlGroupText}"
+							value="{path: 'lineItems>MatlGroup', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 5} }"
+							editable="false" />
+					</t:template>
+				</t:Column>
+
+
+
+				<t:Column id="BROUGHTIN" width="20px">
+					<Text text="Brought In" textAlign='Center' tooltip="iS Brought in to GDT"
+						class='ColumnLabel' />
+					<t:template>
+						<CheckBox select="onSelectBroughtIn" tooltip="Checked -> 'Yes' else 'No'"
+							app:rowid="{lineItems>ItemNumber}"
+							selected="{path: 'lineItems>Procind', formatter: '.formatter.BroughtIn'}"
+							enabled="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
+				<t:Column id="PROCIND" width="15px" visible="true">
+					<Text text="Proc.Ind" textAlign='Center' tooltip="Procurement Indicator"
+						class='ColumnLabel' />
+					<t:template>
+						<!-- <Input showValueStateMessage="false" value="{path: 'lineItems>Procind', 
+							type : 'sap.ui.model.type.String',constraints: {minimum: 1, maximum: 3} }" 
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode} &amp;&amp; 
+							(${lineItems>Procind} === 'WE') ) }" /> -->
+						<ComboBox
+							items="{
 					path: 'procurementList>/',
 					templateShareable:true,
 					sorter: { path: 'Name' }					
 					}"
-					value="{path: 'lineItems>Procind', type : 'sap.ui.model.type.String',constraints: {minimum: 1, maximum: 3} }"
-					editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode} &amp;&amp; ${lineItems>IsEnvRlvt} ) }"
-					 >
-				<core:Item key="{procurementList>Key}" text="{procurementList>Name}" />
-	           </ComboBox>
-				
-				
-				</t:template>
-			</t:Column>
+							value="{path: 'lineItems>Procind', type : 'sap.ui.model.type.String',constraints: {minimum: 1, maximum: 3} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode} &amp;&amp; ${lineItems>IsEnvRlvt} ) }">
+							<core:Item key="{procurementList>Key}" text="{procurementList>Name}" />
+						</ComboBox>
 
-			<t:Column id="ITEMCAT" width="30px" visible="" >
-				<Text text="Item Cat." textAlign='Center' tooltip="Item Category" class='ColumnLabel'/>
-				<t:template>
-					<Input
-						value="{path: 'lineItems>ItemCat', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 1} }"
-						editable="false" />
-				</t:template>
-			</t:Column>	
-			<t:Column id="DELIVERYDATE" width="20px" visible="true" >
-				<Text text="Delivery Date" textAlign='Center' tooltip="Delivery Date" class='ColumnLabel'/>
-				<t:template>
-<!-- 				<DateTimeInput type="Date" 
-				               width="80px"
-                               dateValue="{lineItems>ReqDate}"
-                               displayFormat="MM/dd/yy" 
-                               editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" /> -->
-                <DatePicker type="Date" width="80px"
-                            dateValue="{lineItems>ReqDate}" 
-                            displayFormat="short"
-                            editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }"
-                            />                
-				</t:template>
-			</t:Column>
-			<t:Column id="ITEMTEXT" width="50px" visible="true" >
-				<Text text="PO Long Text" textAlign='Center' tooltip="Item Level Notes" class='ColumnLabel'/>
-				<t:template>
-					<Input
-					    maxLength="40"
-						value="{path: 'lineItems>ItemText', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 40} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>				
 
-			<t:Column id="ITEMLONGTEXT" width="50px" visible="false" >
-				<Text text="Long Notes" textAlign='Center' tooltip="Item Level Long Notes" class='ColumnLabel'/>
-				<t:template>
-					<Input
-						value="{path: 'lineItems>ItemlongText', type : 'sap.ui.model.type.String' }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>				
+					</t:template>
+				</t:Column>
 
-			<t:Column id="STGELOC" width="50px" visible="false" >
-				<Text text="Storage Loc" textAlign='Center' tooltip="Item Level Long Notes" class='ColumnLabel' />
-				<t:template>
-					<Input
-						value="{path: 'lineItems>StgeLoc', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 4} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>	
+				<t:Column id="ITEMCAT" width="30px" visible="">
+					<Text text="Item Cat." textAlign='Center' tooltip="Item Category"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>ItemCat', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 1} }"
+							editable="false" />
+					</t:template>
+				</t:Column>			
+				<t:Column id="ITEMTEXT" width="50px" visible="true">
+					<Text text="PO Long Text" textAlign='Center' tooltip="Item Level Notes"
+						class='ColumnLabel' />
+					<t:template>
+						<Input maxLength="40"
+							value="{path: 'lineItems>ItemText', type : 'sap.ui.model.type.String', constraints: {minLength: 1, maxLength: 40} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
+				<t:Column id="DELIVERYDATE" width="20px" visible="true">
+					<Text text="Delivery Date" textAlign='Center' tooltip="Delivery Date"
+						class='ColumnLabel' />
+					<t:template>
+						<!-- <DateTimeInput type="Date" width="80px" dateValue="{lineItems>ReqDate}" 
+							displayFormat="MM/dd/yy" editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) 
+							}" /> -->
+						<DatePicker type="Date" width="80px" dateValue="{lineItems>ReqDate}"
+							displayFormat="short"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
+				<t:Column id="MFR" width="45px">
+					<Text text="Manufacturer" textAlign='Center' class='ColumnLabel' />
+					<t:template>
+						<Input app:rowid="{lineItems>Component}"
+							tooltip="SAP Manufacturer ID: {path: 'lineItems>Manufacturerno'}"
+							id="mfrId"
+							value="{path: 'lineItems>Manufacturerno', formatter: '.formatter.mfrName'}"
+							type="Text" showSuggestion="true" filterSuggests="false"
+							startSuggestion="0" suggest="handleSuggestMfr1"
+							maxSuggestionWidth="300px" placeholder="" enabled="true"
+							editable="false" change="handleChangeMfrID" />
+					</t:template>
+				</t:Column>
+				<t:Column id="ITEMLONGTEXT" width="50px" visible="false">
+					<Text text="Long Notes" textAlign='Center' tooltip="Item Level Long Notes"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>ItemlongText', type : 'sap.ui.model.type.String' }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
 
-			<t:Column id="DELIVERYDAYS" width="50px" visible="false" >
-				<Text text="Delivery Days" textAlign='Center' tooltip="Delivery Days" class='ColumnLabel'/>
-				<t:template>
-					<Input
-						value="{path: 'lineItems>DeliveryDays', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 3} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>	
-			
-			<t:Column id="PURGROUP" width="50px" visible="false" >
-				<Text text="Purchas. Grp" textAlign='Center' tooltip="Purchasing Group" class='ColumnLabel' />
-				<t:template>
-					<Input
-						value="{path: 'lineItems>PurGroup', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 3} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>
+				<t:Column id="STGELOC" width="50px" visible="false">
+					<Text text="Storage Loc" textAlign='Center' tooltip="Item Level Long Notes"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>StgeLoc', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 4} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
 
-			<t:Column id="PURCHORG" width="50px" visible="false" >
-				<Text text="Purchas. Org." textAlign='Center' tooltip="Purchasing Organization" class='ColumnLabel'/>
-				<t:template>
-					<Input
-						value="{path: 'lineItems>PurchOrg', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 4} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>		
+				<t:Column id="DELIVERYDAYS" width="50px" visible="false">
+					<Text text="Delivery Days" textAlign='Center' tooltip="Delivery Days"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>DeliveryDays', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 3} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
 
-			<t:Column id="ADDRESSNUM1" width="50px" visible="false" >
-				<Text text="Address# 1]" textAlign='Center' tooltip="Address Number" class='ColumnLabel'/>
-				<t:template>
-					<Input
-						value="{path: 'lineItems>AddrNo', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 10} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>	
+				<t:Column id="PURGROUP" width="50px" visible="false">
+					<Text text="Purchas. Grp" textAlign='Center' tooltip="Purchasing Group"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>PurGroup', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 3} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
 
-			<t:Column id="ADDRESSNUM2" width="50px" visible="false" >
-				<Text text="Address# 2]" textAlign='Center' tooltip="Address Number" class='ColumnLabel'/>
-				<t:template>
-					<Input
-						value="{path: 'lineItems>AddrNo2    ', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 10} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>
-			
-			<t:Column id="CUSTOMER" width="50px" visible="false" >
-				<Text text="Customer" textAlign='Center' tooltip="Customer" class='ColumnLabel'/>
-				<t:template>
-					<Input
-						value="{path: 'lineItems>Customer', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 10} }"
-						editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
-				</t:template>
-			</t:Column>	
-			
-		</t:columns>
-		<t:footer id="totalsFooter"  margin="0">
+				<t:Column id="PURCHORG" width="50px" visible="false">
+					<Text text="Purchas. Org." textAlign='Center' tooltip="Purchasing Organization"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>PurchOrg', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 4} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
 
-		</t:footer>
-	</t:Table>
-</Panel> 
+				<t:Column id="ADDRESSNUM1" width="50px" visible="false">
+					<Text text="Address# 1]" textAlign='Center' tooltip="Address Number"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>AddrNo', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 10} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
+
+				<t:Column id="ADDRESSNUM2" width="50px" visible="false">
+					<Text text="Address# 2]" textAlign='Center' tooltip="Address Number"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>AddrNo2    ', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 10} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
+
+				<t:Column id="CUSTOMER" width="50px" visible="false">
+					<Text text="Customer" textAlign='Center' tooltip="Customer"
+						class='ColumnLabel' />
+					<t:template>
+						<Input
+							value="{path: 'lineItems>Customer', type : 'sap.ui.model.type.String',constraints: {minLength: 1, maxLength: 10} }"
+							editable="{= (!${lineItems>Db} &amp;&amp; ${currentState>/isEditMode}) }" />
+					</t:template>
+				</t:Column>
+
+			</t:columns>
+			<t:footer id="totalsFooter" margin="0">
+
+			</t:footer>
+		</t:Table>
+	</Panel>
 </core:FragmentDefinition>
