@@ -472,11 +472,12 @@ _doImportFile = function(files, append) {
 
 
 _createNewLine = function(detailsArray) {
-	var currentData   = view.getModel("currentData"),
-		NetworkId  = currentData.getProperty("/Network"),
-		ActivityId = currentData.getProperty("/Activity"),
-		CustomerId = currentData.getProperty("/Customer"),
-		DeliveryDate = currentData.getProperty("/ReqDate"),
+	var currentDataModel   = view.getModel("currentData"), 
+	    currentData   = view.getModel("currentData").getData( ),
+		NetworkId  = currentDataModel.getProperty("/Network"),
+		ActivityId = currentDataModel.getProperty("/Activity"),
+		CustomerId = currentDataModel.getProperty("/Customer"),
+		DeliveryDate = currentDataModel.getProperty("/ReqDate"),
 		newLine = jQuery.extend(true, {}, core.getModel("blankLineItem").getData()),
 		userid = core.getModel("systemInfo").getProperty("/Uname"),
 		today = new Date(Date.now()),
@@ -493,6 +494,20 @@ _createNewLine = function(detailsArray) {
 	newLine.Component = MaxCompId.toString( );
 	newLine.Procind = "PFS";
 	newLine.EntryQuantity = "1";
+	if(currentData.IsAddressCopiedToItem){
+		newLine.IsAddrCopyFromHeader= true;
+		newLine.IsAddrCopyFromItem  = false;
+		newLine.CopiedAddrComponent = "000000000000000"; // "000000000000000" as header Notation
+		newLine.Customer            = currentData.DeliveryAddress.Customer;
+		newLine.AddrNo              = currentData.AddrNo;
+		newLine.AddrNo2             = currentData.AddrNo2;
+		newLine.DeliveryAddress     = currentData.DeliveryAddress;
+		newLine.DeliveryAddressFlag = currentData.DeliveryAddressFlag;}
+	else{
+		newLine.Customer            = currentData.Customer;	
+	}	
+	
+	
 	if(DeliveryDate){newLine.ReqDate = new Date(DeliveryDate);}
 	core.getModel("currentState").setProperty("/itemNumber",newLine.ItemNumber);
 	return newLine;

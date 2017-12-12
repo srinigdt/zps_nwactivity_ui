@@ -12,14 +12,14 @@
 				select="onSelectTab" expanded="{device>/isNoPhone}">
 				<items>
 					<IconTabFilter id="activityHeaderTab" icon="sap-icon://header"
-						text="{i18n>activityHeaderTab}" key="activityHeaderTab">
+						text="{i18n>activityHeaderTab}" key="activityHeaderTab" tooltip="Header Data">
 						<content>
 							<core:Fragment fragmentName="gdt.ui.ps.networkcomp.fragment.Details_HeaderTab"
 								type="XML" />
 						</content>
 					</IconTabFilter>
 					<IconTabFilter id="activityItemTab" icon="sap-icon://list"
-						text="{i18n>activityItemTab}" key="activityItemTab">
+						text="{i18n>activityItemTab}" key="activityItemTab" tooltip="Network Items">
 						<content>
 
 							<core:Fragment fragmentName="gdt.ui.ps.networkcomp.fragment.Details_ItemsTab"
@@ -27,14 +27,14 @@
 						</content>
 					</IconTabFilter>
 					<IconTabFilter id="deliverynotesTab" icon="sap-icon://notes"
-						text="{i18n>notes}" key="notesTab">
+						text="{i18n>notes}" key="notesTab" tooltip="Delivery Note">
 						<content>
 							<core:Fragment fragmentName="gdt.ui.ps.networkcomp.fragment.Details_NotesTab"
 								type="XML" />
 						</content>
 					</IconTabFilter>
-					<IconTabFilter id="mailComposeTab" icon="sap-icon://arobase"
-						text="{i18n>mailCompose}" key="mailcomposeTab">
+					<IconTabFilter id="mailComposeTab" icon="sap-icon://arobase" width ="50px"
+						text="{i18n>mailCompose}" key="mailcomposeTab" tooltip="Email Master Data">
 						<content>
 							<core:Fragment 
 								fragmentName="gdt.ui.ps.networkcomp.fragment.Details_MailComposeTab"
