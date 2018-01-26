@@ -9,7 +9,7 @@ $.sap.require("gdt.ui.ps.networkcomp.data.DataContext");
 //$.sap.require("gdt.ui.ps.networkcomp.data.DataLoader"); 
 
 
-gdt.ui.ps.networkcomp.util.ValueHelper = (function($, core, _,datacontext,copies,view,source,binding,model,busy,saveRow) {
+gdt.ui.ps.networkcomp.util.ValueHelper = (function($, core, _,datacontext,copies,view,source,binding,model,busy,saveRow,saveRowContext) {
 	
 var	partId = function (event,viewController) {
     	    view = viewController.getView( );
@@ -23,6 +23,7 @@ var	partId = function (event,viewController) {
 		    
 		   var row     = model.getProperty(context.getPath());	
 		    saveRow = jQuery.extend(true, {}, row);
+		    saveRowContext = context ;
 		// instantiate dialog
 		_instantiate_dialogs(viewController);
 		dialog = viewController._PartSearchDialog[0];
@@ -69,7 +70,7 @@ var	partId = function (event,viewController) {
 	//	saveRow.Manufacturerno = evt.getParameter("selectedItem").getCells()[1].getText();
 		saveRow.Manufacturerno = _.findWhere(core.getModel("Manufacturers").getData(),{Manufacturername:evt.getParameter("selectedItem").getCells()[1].getText()}).Manufacturerid;
 		if(evt.getParameter("selectedItem").getCells()[4].getText().toString()==="true"){saveRow.Procind ="WE";}
-		model.setProperty(context.getPath(), saveRow);	
+		model.setProperty(saveRowContext.getPath(), saveRow);	
 	},
 	
 	
@@ -550,12 +551,12 @@ var	partId = function (event,viewController) {
 						});
 					}
 					if (!!results && results.length === 1) {
-							row.Langu = results[0].Value;
+						langauge = results[0].Value;
 						if (source.getValueState() === sap.ui.core.ValueState.Error) {
 							source.setValueState(sap.ui.core.ValueState.None);
 							source.setTooltip();
 						}
-					    model.setProperty((context) ? context.getPath() : binding.getPath( ),(context) ? row :row.Langu);
+					    model.setProperty((context) ? context.getPath() : binding.getPath( ),(context) ? row :langauge);
 						found = true;
 					}
 
@@ -565,7 +566,7 @@ var	partId = function (event,viewController) {
 						return false;
 					}
 				} else {
-					row.Langu="";
+					model.setProperty((context) ? context.getPath() : binding.getPath( ),(context) ? row :"");
 					source.setTooltip("");
 					source.setValueState(sap.ui.core.ValueState.None);
 					return false;
@@ -615,12 +616,12 @@ var	partId = function (event,viewController) {
 				});
 			}
 			if (!!results && results.length === 1) {
-					row.Country = results[0].Value;
+				    country = results[0].Value;
 				if (source.getValueState() === sap.ui.core.ValueState.Error) {
 					source.setValueState(sap.ui.core.ValueState.None);
 					source.setTooltip();
 				}
-			    model.setProperty((context) ? context.getPath() : binding.getPath( ),(context) ? row :row.Country);
+			    model.setProperty((context) ? context.getPath() : binding.getPath( ),(context) ? row :country);
 				found = true;
 			}
 
@@ -630,7 +631,7 @@ var	partId = function (event,viewController) {
 				return false;
 			}
 		} else {
-			row.Country="";
+			model.setProperty((context) ? context.getPath() : binding.getPath( ),(context) ? row :"");
 			source.setTooltip( "Country is a required field, please enter.");
 			source.setValueState(sap.ui.core.ValueState.Error);
 			return false;
@@ -643,7 +644,7 @@ var	partId = function (event,viewController) {
 				source  = event.getSource(),
 				binding = source.getBinding("value"),
 				model   = binding.getModel(),
-				country =  model.getProperty("/Country"),
+				country =  (model.getProperty("/Country"))? model.getProperty("/Country"):model.getProperty("/DeliveryAddress/Country"),
 				regions = (country)? _.filter(core.getModel("Regions").getData(),function(data){return data.Land1 === country;})|| []: core.getModel("Regions").getData() || [],
 				suggestions = [];
 
@@ -668,8 +669,9 @@ var	partId = function (event,viewController) {
 				model = binding.getModel(),
 				country =  model.getProperty("/Country"),
 				row = (context) ? model.getProperty(context.getPath()) : model.getData(),
+			    isHeader = (event.getSource().getParent( ).getParent( ).getParent( ).sId === "DialogDeliveryAddressH")?true:false;		
 				saveRow = $.extend(true, {}, row),
-				regions = (country)? _.filter(core.getModel("Regions").getData(),function(data){return data.Land1 === country;})|| []: core.getModel("Regions").getData() || [],
+				regions = (country)? _.filter(core.getModel("Regions").getData(),function(data){return data.Land1 === country;})|| []: core.getModel("Regions").getData() || [],	
 				found = false;
 
 			if (regions){
@@ -683,12 +685,12 @@ var	partId = function (event,viewController) {
 					});
 				}
 				if (!!results && results.length === 1) {
-						row.Region = results[0].Bland;
+					region = results[0].Bland;
 					if (source.getValueState() === sap.ui.core.ValueState.Warning) {
 						source.setValueState(sap.ui.core.ValueState.None);
 						source.setTooltip();
 					}
-				    model.setProperty((context) ? context.getPath() : binding.getPath( ),(context) ? row :row.Region);
+				    model.setProperty((context) ? context.getPath() : binding.getPath( ),(context) ? row :region);
 					found = true;
 				}
 
@@ -698,7 +700,7 @@ var	partId = function (event,viewController) {
 					return false;
 				}
 			} else {
-				row.Region="";
+				model.setProperty((context) ? context.getPath() : binding.getPath( ),(context) ? row :"");
 				source.setTooltip("Please enter Valid Region");
 				source.setValueState(sap.ui.core.ValueState.Warning);
 				return false;
